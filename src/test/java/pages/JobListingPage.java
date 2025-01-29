@@ -32,9 +32,9 @@ public class JobListingPage extends BasePage {
         return isElementDisplayed(jobsList);
     }
 
-    public boolean areAllJobsCorrectlyFiltered() {
-
+    public boolean areAllJobsCorrectlyFiltered() throws InterruptedException {
         scrollForPageLoading();
+        Thread.sleep(2000);
 
         List<WebElement> titles = getElements(jobTitles);
         List<WebElement> departments = getElements(jobDepartments);
@@ -61,7 +61,7 @@ public class JobListingPage extends BasePage {
 
     public void clickViewRole() {
         List<WebElement> titles = getElements(jobTitles);
-        moveToElement(titles.get(0));
+        moveToElement(titles.getFirst());
         clickElement(viewRoleButtons);
     }
 

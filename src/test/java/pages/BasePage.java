@@ -50,7 +50,6 @@ public class BasePage {
     }
 
     public void moveToElement(WebElement element) {
-       // WebElement element = waitForElementToBeVisible(locator);
         Actions actions = new Actions(driver);
         actions.moveToElement(element).perform();
     }
@@ -58,7 +57,6 @@ public class BasePage {
     public void scrollForPageLoading(){
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, 500);");
-
     }
 
     public void handleNewTab() {
@@ -78,18 +76,16 @@ public class BasePage {
         }
     }
 
-    public String getText(By locator) {
-        return waitForElementToBeVisible(locator).getText().trim();
-    }
-
-    public void enterText(By locator, String text) {
-        waitForElementToBeVisible(locator).sendKeys(text);
-    }
-
     public void selectDropdownElement(By locator, String text){
         WebElement dropdownElement = waitForElementToBeVisible(locator);
+
+        wait.until(driver -> {
+            List<WebElement> options = dropdownElement.findElements(By.tagName("option"));
+            return options.size() > 1;
+        });
+
         Select select = new Select(dropdownElement);
-        select.selectByVisibleText(text); // Select by visible text
+        select.selectByVisibleText(text);
     }
 
     public boolean isElementDisplayed(By locator) {

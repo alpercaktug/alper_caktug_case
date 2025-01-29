@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 import pages.*;
 
 public class CareersTest {
-    private WebDriver driver;
     private HomePage homePage;
     private CareersPage careersPage;
     private JobListingPage jobListingPage;
@@ -17,23 +16,17 @@ public class CareersTest {
 
     @BeforeMethod
     public void setUp() {
-        driver = DriverManager.getWebDriver();
+        WebDriver driver = DriverManager.getWebDriver();
         homePage = new HomePage(driver);
         careersPage = new CareersPage(driver);
         qaPage = new QualityAssurancePage(driver);
         jobListingPage = new JobListingPage(driver);
-
-
-        //driver.get("https://useinsider.com/");
-        //homePage.acceptCookie();
-
     }
 
     @Test
     public void testCareersPageAndJobFilter() throws InterruptedException {
 
         // Step 1: Navigate to homepage and check is opened
-
         homePage.navigateTo("https://useinsider.com/");
         homePage.acceptCookie();
         Assert.assertTrue(homePage.isHomePageOpened(), "Home page is not opened");
@@ -49,27 +42,20 @@ public class CareersTest {
         // Step 4: Go to QA job listings
         qaPage.clickSeeAllQAJobs();
 
-
-        Thread.sleep(15000);
-
-        // Step 5: Filter jobs
+        // Step 5: Filter and validate job details
         jobListingPage.filterJobs("Istanbul, Turkey", "Quality Assurance");
-
-        Thread.sleep(5000);
-
+        Thread.sleep(2000);
         Assert.assertTrue(jobListingPage.areJobsDisplayed(), "No jobs found after filtering");
 
-        // Step 5: Validate job details
         Assert.assertTrue(jobListingPage.areAllJobsCorrectlyFiltered(), "Filtered jobs do not match criteria");
 
         // Step 6: Click a job and validate Lever Application page
         jobListingPage.clickViewRole();
-        Thread.sleep(2000);
         Assert.assertTrue(jobListingPage.isRouteApplicationFormPage(), "Not redirected to Lever application form");
     }
 
     @AfterMethod
     public void tearDown() {
-        driver.quit();
+        DriverManager.quitDriver();
     }
 }

@@ -12,7 +12,6 @@ public class HomePage extends BasePage {
     private final By careersLink = By.xpath("//a[contains(text(), 'Careers')]");
     private final By acceptAllCookieButton = By.xpath("//a[@id='wt-cli-accept-all-btn']");
 
-
     public HomePage(WebDriver driver) {
         super(driver);
     }
